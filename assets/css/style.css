@@ -36,6 +36,13 @@ p {
 a {
     text-decoration: none;
     color: blueviolet;
+    transition: all 100ms ease;
+}
+
+a:hover {
+    color: rgb(171, 34, 186);
+    cursor: pointer;
+    transform: scale(1.05);
 }
 
 button {
@@ -45,11 +52,11 @@ button {
     border: none;
     background-color: rgb(68, 0, 128);
     color: white;
-    transition: all 200ms ease;
+    transition: all 100ms ease;
 }
 
 button:hover {
-    background-color: rgb(54, 1, 100);
+    background-color: rgb(171, 34, 186);
     cursor: pointer;
     transform: scale(1.05);
 }
