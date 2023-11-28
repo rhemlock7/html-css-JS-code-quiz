@@ -5,14 +5,15 @@ let timeLeft = 60; // Time allotted for timer = seconds
 // HTML Elements
 let question = document.getElementById("h1");
 let startButton = document.getElementById("bttn");
+let answerDiv = document.createElement("div")
+let answerText = document.createElement("p")
 
 // Multiple choice container and buttons
 let paragraph = document.getElementById("p");
-let answerDiv = document.createElement("div")
 let form = document.createElement("form");
 
 // Add dynamic multiple choice questions
-function addMultipleChoice(bttnValue) {
+function addMultipleChoice(bttnValue, correct) {
     let radio = document.createElement("input");
     
     //Set the input's value
@@ -24,6 +25,23 @@ function addMultipleChoice(bttnValue) {
     // Append the button to the form
     form.appendChild(radio);
     paragraph.replaceWith(form);
+
+    // Append answer reveal
+    answerDiv.id = 'answer-div'
+    answerDiv.appendChild(answerText);
+    
+
+    // Check if answer was correct
+    radio.addEventListener("click", function(){
+        if (correct === true) {
+            form.appendChild(answerDiv);
+            answerText.textContent = "✅ Correct!"
+        } else {
+            form.appendChild(answerDiv);
+            answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
+            timeLeft = timeLeft - 10;
+        }
+    })
 }
 
 // Question functions
@@ -32,7 +50,7 @@ function questionOne() {
 
     addMultipleChoice("Strings");
     addMultipleChoice("Booleans");
-    addMultipleChoice("Alerts");
+    addMultipleChoice("Alerts", true);
     addMultipleChoice("Numbers");
 
 }
@@ -60,3 +78,5 @@ function countdown() {
 
     }, 1000)
 }
+
+countdown();
