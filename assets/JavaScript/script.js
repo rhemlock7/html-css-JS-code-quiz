@@ -3,10 +3,18 @@ let timer = document.getElementById("timer");
 let timeLeft = 60; // Time allotted for timer = seconds
 
 // Questions & Options
-let questionArray = {
-    questionOne: "Commonly used data types do NOT include:", //Question
-    optionsOne: ["Strings", "Booleans", "Alerts", "Numbers"] //Options
-}
+let questionArray = [
+    {
+        question: "Commonly used data types do NOT include:",
+        options: ["Strings", "Booleans", "Alerts", "Numbers"],
+        correctAnswer: options[2]
+    },
+    {
+        question: "This is a test for question 2",
+        options: ["Option", "Ryan", "Hemlock", "Code"],
+        correctAnswer: options[1]
+    }
+]
     
 
 // HTML Elements
@@ -53,9 +61,9 @@ function addMultipleChoice(bttnValue, correct) {
 
 // Question functions
 function displayQuestion() {
-    question.textContent = "Commonly used data types do NOT include:";
+    question.textContent = "text" + questionArray[0].question[0];
 
-    addMultipleChoice("Strings");
+    addMultipleChoice(questionArray[0].options[0]);
     addMultipleChoice("Booleans");
     addMultipleChoice("Alerts", true);
     addMultipleChoice("Numbers");
