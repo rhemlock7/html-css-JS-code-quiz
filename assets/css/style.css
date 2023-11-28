@@ -62,10 +62,17 @@ button:hover {
     transform: scale(1.05);
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 250px;
+}
+
 .button-choice {
-    padding: 10px 45px;
-    margin-top: 40px;
+    padding: 12px 45px;
     border-radius: 8px;
+    margin: 8px 0;
     border: none;
     background-color: rgb(68, 0, 128);
     color: white;
