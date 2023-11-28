@@ -8,14 +8,15 @@
 
 body {
     text-align: center;
+    width: 85%;
+    max-width: 1440px;
+    margin: auto;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 85%;
-    max-width: 1440px;
     height: 75px;
     margin: auto;
 }
@@ -56,6 +57,29 @@ button {
 }
 
 button:hover {
+    background-color: rgb(171, 34, 186);
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    width: 250px;
+}
+
+.button-choice {
+    padding: 12px 45px;
+    border-radius: 8px;
+    margin: 8px 0;
+    border: none;
+    background-color: rgb(68, 0, 128);
+    color: white;
+    transition: all 100ms ease;
+}
+
+.button-choice:hover {
     background-color: rgb(171, 34, 186);
     cursor: pointer;
     transform: scale(1.05);
