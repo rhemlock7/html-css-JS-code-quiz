@@ -2,6 +2,13 @@
 let timer = document.getElementById("timer");
 let timeLeft = 60; // Time allotted for timer = seconds
 
+// Questions & Options
+let questionArray = {
+    questionOne: "Commonly used data types do NOT include:", //Question
+    optionsOne: ["Strings", "Booleans", "Alerts", "Numbers"] //Options
+}
+    
+
 // HTML Elements
 let question = document.getElementById("h1");
 let startButton = document.getElementById("bttn");
@@ -45,7 +52,7 @@ function addMultipleChoice(bttnValue, correct) {
 }
 
 // Question functions
-function questionOne() {
+function displayQuestion() {
     question.textContent = "Commonly used data types do NOT include:";
 
     addMultipleChoice("Strings");
@@ -62,7 +69,7 @@ function countdown() {
     document.body.setAttribute("style", "text-align:left;")
 
     // Questions
-    questionOne();
+    displayQuestion();
 
     
     // Timer countdown. Stop quiz if timer hits 0
@@ -74,9 +81,14 @@ function countdown() {
             clearInterval(timeInterval);
             timer.textContent = "Out of time!";
             timer.setAttribute("style", "color:red")
+            question.textContent = "Quiz Ended 😔";
+            answerText.textContent = "";
+            form.textContent = "";
         }
 
     }, 1000)
 }
 
-countdown();
+countdown()
+
+// Window.location and local storage for "view highscores"!!
