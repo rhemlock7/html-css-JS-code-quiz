@@ -1,6 +1,6 @@
 // Variables
 let timer = document.getElementById("timer");
-let timeLeft = 60; // Time allotted for timer = seconds
+let timeLeft = 90; // Time allotted for timer = seconds
 
 // Questions & Options
 let questionArray = [
@@ -41,7 +41,8 @@ let answerText = document.createElement("p")
 // Multiple choice container and buttons
 let paragraph = document.getElementById("p");
 let form = document.createElement("form");
-let buttonValue;
+let questionCount;
+questionCount = 0;
 
 // Add dynamic multiple choice questions
 function addMultipleChoice(bttnValue) {
@@ -58,65 +59,74 @@ function addMultipleChoice(bttnValue) {
     form.appendChild(radio);
     paragraph.replaceWith(form);
 
+    // Check correct answer
     radio.addEventListener("click", function(){
-        buttonValue = bttnValue;
+        let buttonValue = bttnValue;
         // console.log(buttonValue)
+        if (buttonValue == questionArray[0].correctAnswer) {
+            console.log("CORRECT")
+            form.appendChild(answerDiv);
+            answerText.textContent = "✅ Correct!"
+            questionCount++;
+            displayQuestion(questionCount)
+        } else {
+            form.appendChild(answerDiv);
+            answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
+            timeLeft = timeLeft - 10;
+            questionCount++;
+            displayQuestion(questionCount)
+        }
     })
-
 }
 
-// Question functions
-function displayQuestion(i) {
-    let questionCount = i;
-    question.textContent = questionArray[questionCount].question;
 
-    addMultipleChoice(questionArray[questionCount].options[0]);
-    addMultipleChoice(questionArray[questionCount].options[1]);
-    addMultipleChoice(questionArray[questionCount].options[2]);
-    addMultipleChoice(questionArray[questionCount].options[3]);
+// Question functions
+function displayQuestion(indexNumber) {
+    question.textContent = questionArray[indexNumber].question;
+
+    if (indexNumber === 0) {
+        addMultipleChoice(questionArray[indexNumber].options[0]);
+        addMultipleChoice(questionArray[indexNumber].options[1]);
+        addMultipleChoice(questionArray[indexNumber].options[2]);
+        addMultipleChoice(questionArray[indexNumber].options[3]);
+    } else {
+        $("#Strings").val(questionArray[indexNumber].options[0])
+        $("#Booleans").val(questionArray[indexNumber].options[1])
+        $("#Alerts").val(questionArray[indexNumber].options[2])
+        $("#Numbers").val(questionArray[indexNumber].options[3])
+    }
 
     // Append answer reveal
     answerDiv.id = 'answer-div'
     answerDiv.appendChild(answerText);
 
-    // Check correct answer
-    if (buttonValue == questionArray[0].options[2]) {
-        console.log("clicked")
-        form.appendChild(answerDiv);
-        answerText.textContent = "✅ Correct!"
-        questionCount++;
-    } 
-    // else if (buttonValue !== questionArray[0].options[2]) {
-    //     form.appendChild(answerDiv);
-    //     answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
-    //     timeLeft = timeLeft - 10;
-    // }
-}
+} 
+
 
 // Timer countdown function
-function startQuiz() {
+function startQuiz(indexNumber) {
     // Remove start button and style text-align:left;
     startButton.setAttribute("style", "display:none;");
     document.body.setAttribute("style", "text-align:left;")
 
     // Questions - Start at the first question "0"
-    displayQuestion(0);
+    displayQuestion(indexNumber);
     
     // Timer countdown. Stop quiz if timer hits 0
-    // let timeInterval = setInterval(function() {
-    //     timeLeft--;
-    //     timer.textContent = "Time: " + timeLeft;
+    let timeInterval = setInterval(function() {
+        timeLeft--;
+        timer.textContent = "Time: " + timeLeft;
 
-    //     if(timeLeft === -1) {
-    //         clearInterval(timeInterval);
-    //         timer.textContent = "Out of time!";
-    //         timer.setAttribute("style", "color:red")
-    //         question.textContent = "Quiz Ended 😔";
-    //         answerText.textContent = "";
-    //         form.textContent = "";
-    //     }
+        if(timeLeft === -1) {
+            clearInterval(timeInterval);
+            timer.textContent = "Out of time!";
+            timer.setAttribute("style", "color:red")
+            question.textContent = "Quiz Ended 😔";
+            answerText.textContent = "";
+            form.textContent = "";
+        }
 
-    // }, 1000)
+    }, 1000)
 }
 
-startQuiz();
+startQuiz(questionCount);
