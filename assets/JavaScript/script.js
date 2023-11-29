@@ -7,14 +7,14 @@ let questionArray = [
     {
         question: "Commonly used data types do NOT include:",
         options: ["Strings", "Booleans", "Alerts", "Numbers"],
-        correctAnswer: options[2]
+        correctAnswer: "Alerts"
     },
     {
         question: "This is a test for question 2",
         options: ["Option", "Ryan", "Hemlock", "Code"],
-        correctAnswer: options[1]
+        correctAnswer: "Option"
     }
-]
+];
     
 
 // HTML Elements
@@ -61,12 +61,12 @@ function addMultipleChoice(bttnValue, correct) {
 
 // Question functions
 function displayQuestion() {
-    question.textContent = "text" + questionArray[0].question[0];
+    question.textContent = questionArray[0].question;
 
     addMultipleChoice(questionArray[0].options[0]);
-    addMultipleChoice("Booleans");
-    addMultipleChoice("Alerts", true);
-    addMultipleChoice("Numbers");
+    addMultipleChoice(questionArray[0].options[1]);
+    addMultipleChoice(questionArray[0].options[2]);
+    addMultipleChoice(questionArray[0].options[3]);
 
 }
 
