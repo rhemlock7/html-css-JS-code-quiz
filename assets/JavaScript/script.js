@@ -10,9 +10,24 @@ let questionArray = [
         correctAnswer: "Alerts"
     },
     {
-        question: "This is a test for question 2",
-        options: ["Option", "Ryan", "Hemlock", "Code"],
-        correctAnswer: "Option"
+        question: "The condition of an if/else statement is enclosed with ______.",
+        options: ["Quotes", "Curly Brackets", "Parenthesis", "Square Brackets"],
+        correctAnswer: "Parenthesis"
+    },
+    {
+        question: "Arrays in JavaScript can be used to store ________.",
+        options: ["Numbers & Strings", "Other Arrays", "Booleans", "All of the above"],
+        correctAnswer: "All of the above"
+    },
+    {
+        question: "String values must be enclosed within ______ when being assigned to variables.",
+        options: ["Commas", "Curly Brackets", "Quotes", "Parenthesis"],
+        correctAnswer: "Quotes"
+    },
+    {
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        options: ["JavaScript", "Terminal/Bash", "For Loops", "Console Log"],
+        correctAnswer: "Console Log"
     }
 ];
     
@@ -26,11 +41,13 @@ let answerText = document.createElement("p")
 // Multiple choice container and buttons
 let paragraph = document.getElementById("p");
 let form = document.createElement("form");
+let buttonValue;
 
 // Add dynamic multiple choice questions
-function addMultipleChoice(bttnValue, correct) {
-    let radio = document.createElement("input");
+function addMultipleChoice(bttnValue) {
     
+    let radio = document.createElement("input");
+
     //Set the input's value
     radio.type = 'button';
     radio.value = bttnValue;
@@ -41,62 +58,65 @@ function addMultipleChoice(bttnValue, correct) {
     form.appendChild(radio);
     paragraph.replaceWith(form);
 
-    // Append answer reveal
-    answerDiv.id = 'answer-div'
-    answerDiv.appendChild(answerText);
-    
-
-    // Check if answer was correct
     radio.addEventListener("click", function(){
-        if (correct === true) {
-            form.appendChild(answerDiv);
-            answerText.textContent = "✅ Correct!"
-        } else {
-            form.appendChild(answerDiv);
-            answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
-            timeLeft = timeLeft - 10;
-        }
+        buttonValue = bttnValue;
+        // console.log(buttonValue)
     })
+
 }
 
 // Question functions
-function displayQuestion() {
-    question.textContent = questionArray[0].question;
+function displayQuestion(i) {
+    let questionCount = i;
+    question.textContent = questionArray[questionCount].question;
 
-    addMultipleChoice(questionArray[0].options[0]);
-    addMultipleChoice(questionArray[0].options[1]);
-    addMultipleChoice(questionArray[0].options[2]);
-    addMultipleChoice(questionArray[0].options[3]);
+    addMultipleChoice(questionArray[questionCount].options[0]);
+    addMultipleChoice(questionArray[questionCount].options[1]);
+    addMultipleChoice(questionArray[questionCount].options[2]);
+    addMultipleChoice(questionArray[questionCount].options[3]);
 
+    // Append answer reveal
+    answerDiv.id = 'answer-div'
+    answerDiv.appendChild(answerText);
+
+    // Check correct answer
+    if (buttonValue == questionArray[0].options[2]) {
+        console.log("clicked")
+        form.appendChild(answerDiv);
+        answerText.textContent = "✅ Correct!"
+        questionCount++;
+    } 
+    // else if (buttonValue !== questionArray[0].options[2]) {
+    //     form.appendChild(answerDiv);
+    //     answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
+    //     timeLeft = timeLeft - 10;
+    // }
 }
 
 // Timer countdown function
-function countdown() {
+function startQuiz() {
     // Remove start button and style text-align:left;
     startButton.setAttribute("style", "display:none;");
     document.body.setAttribute("style", "text-align:left;")
 
-    // Questions
-    displayQuestion();
-
+    // Questions - Start at the first question "0"
+    displayQuestion(0);
     
     // Timer countdown. Stop quiz if timer hits 0
-    let timeInterval = setInterval(function() {
-        timeLeft--;
-        timer.textContent = "Time: " + timeLeft;
+    // let timeInterval = setInterval(function() {
+    //     timeLeft--;
+    //     timer.textContent = "Time: " + timeLeft;
 
-        if(timeLeft === -1) {
-            clearInterval(timeInterval);
-            timer.textContent = "Out of time!";
-            timer.setAttribute("style", "color:red")
-            question.textContent = "Quiz Ended 😔";
-            answerText.textContent = "";
-            form.textContent = "";
-        }
+    //     if(timeLeft === -1) {
+    //         clearInterval(timeInterval);
+    //         timer.textContent = "Out of time!";
+    //         timer.setAttribute("style", "color:red")
+    //         question.textContent = "Quiz Ended 😔";
+    //         answerText.textContent = "";
+    //         form.textContent = "";
+    //     }
 
-    }, 1000)
+    // }, 1000)
 }
 
-countdown()
-
-// Window.location and local storage for "view highscores"!!
+startQuiz();
