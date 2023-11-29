@@ -63,8 +63,8 @@ function addMultipleChoice(bttnValue) {
     radio.addEventListener("click", function(){
         let buttonValue = bttnValue;
         // console.log(buttonValue)
-        if (buttonValue == questionArray[0].correctAnswer) {
-            console.log("CORRECT")
+        if (buttonValue == questionArray[questionCount].correctAnswer) {
+            console.log(questionCount)
             form.appendChild(answerDiv);
             answerText.textContent = "✅ Correct!"
             questionCount++;
