@@ -120,13 +120,13 @@ let score = 0;
 // ---------- Create question ---------- //
 function displayQuestion(questionArray){
     questionh1.textContent = questionArray.question;
-
+    paragraph.textContent = "";
     const multipleChoiceContainer = document.createElement('div');
     multipleChoiceContainer.className = "multiple-choice-container"
     
     // Add the multiple choice answers
     questionArray.answers.forEach(answer => {
-        // console.log(answer.option);
+        console.log(answer.option);
         // create multiple choice container div
         // create the buttons to be within the div
         const choiceButton = document.createElement('button');
@@ -138,7 +138,7 @@ function displayQuestion(questionArray){
 
         // Append the button to the container
         multipleChoiceContainer.append(choiceButton);
-        paragraph.replaceWith(multipleChoiceContainer);
+        paragraph.append(multipleChoiceContainer);
 
         // Event listener to handle click
         choiceButton.addEventListener('click', selectAnswer);
@@ -161,11 +161,21 @@ function selectAnswer(event) {
     if (selectButton.dataset.answer === "true") {
         console.log("true")
         answerText.textContent = "✅ Correct"
+        setTimeout(function(){
+            answerText.textContent = "";
+            currentQuestionIndex++;
+            displayQuestion(questions[currentQuestionIndex])
+        }, 500)
 
         // increase "currentQuestionIndex" to go to next question
     } else {
         console.log("false")
         answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
+        setTimeout(function(){
+            answerText.textContent = "";
+            currentQuestionIndex++;
+            displayQuestion(questions[currentQuestionIndex])
+        }, 500)
 
         // increase "currentQuestionIndex" to go to next question
     }
@@ -177,7 +187,7 @@ function startQuiz() {
     startButton.setAttribute("style", "display:none;");
     document.body.setAttribute("style", "text-align:left;")
 
-    currentQuestionIndex = 0;
+    
     score = 0;
     displayQuestion(questions[currentQuestionIndex]);
     
@@ -202,5 +212,3 @@ function startQuiz() {
 
 
 // ---------- Show High Scores ---------- //
-
-startQuiz()

@@ -96,7 +96,7 @@ form {
 .multiple-choice-container {
     display: flex;
     flex-direction: column;
-    width: 250px;
+    width: 275px;
 }
 
 .answer-status {
