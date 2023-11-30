@@ -1,28 +1,40 @@
 // ---------- Variables ---------- //
 const root = $('#root');
 let timer = document.getElementById("timer");
-let timeLeft = 20; // Time allotted for timer = seconds
+let timeLeft = 40; // Time allotted for timer = seconds
 let timeInterval;
+const leaderBoard = document.getElementById('high-score-list');
+
+// ---------- HTML Elements ---------- //
+let questionh1 = document.getElementById("h1");
+let startButton = document.getElementById("bttn");
+let paragraph = document.getElementById("p")
+
+// ---------- Question & Score tracking ---------- //
+let currentQuestionIndex = 0;
+let score = 0;
 
 // ---------- High Score ---------- //
-const highScore = JSON.parse(localStorage.getItem('highScores'));
+let highScore = [];
 
 function stringifyArray() {
     localStorage.setItem('highScores', JSON.stringify(highScore))
-
     console.log("registered to local storage")
 }
 
 function printHighScores() {
-    let lastHighScore = JSON.parse(localStorage.getItem('highScores'))
-    console.log(lastHighScore)
+    // Get local storage data
+    let lastHighScore = JSON.parse(localStorage.getItem('highScores'));
+    highScore = lastHighScore;
+    highScore.sort(lastHighScore.score)
+    highScore.reverse(lastHighScore.score)
+    const scoreLi = document.createElement('li');
 
     lastHighScore.forEach(display => {
-        const scoreLi = document.createElement('li');
-        const leaderBoard = document.getElementById('high-score-list');
+        
         scoreLi.textContent = display.initials + ": " + display.score;
-
         leaderBoard.append(scoreLi);
+        
     })
 }
 
@@ -130,16 +142,6 @@ const questions = [
     }
 ]
 
-// ---------- HTML Elements ---------- //
-let questionh1 = document.getElementById("h1");
-let startButton = document.getElementById("bttn");
-let paragraph = document.getElementById("p")
-
-// ---------- Question & Score tracking ---------- //
-let currentQuestionIndex = 0;
-let score = 0;
-
-
 // ---------- Create question ---------- //
 function displayQuestion(questionArray) {
     questionh1.textContent = questionArray.question;
@@ -152,7 +154,6 @@ function displayQuestion(questionArray) {
         // create multiple choice container div
         // create the buttons to be within the div
         const choiceButton = document.createElement('button');
-        // $("<button>")
 
         // Button value === index. Passing index through displayQuestion function
         choiceButton.dataset.answer = answer.isCorrect;
@@ -181,14 +182,14 @@ function selectAnswer(event) {
 
     // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
-        if (timeLeft < 0 || currentQuestionIndex > 4) {
+        if (timeLeft < 0 || currentQuestionIndex === 5) {
             clearInterval(timeInterval);
             endQuiz();
         } else {
             answerText.textContent = "✅ Correct"
             setTimeout(function () {
                 currentQuestionIndex++;
-                score = timeLeft + 20;
+                score = score + 50;
                 answerText.textContent = "";
                 displayQuestion(questions[currentQuestionIndex])
             }, 500)
@@ -196,8 +197,8 @@ function selectAnswer(event) {
         }
     } else {
         timeLeft = timeLeft - 10;
-        score = timeLeft - 10;
-        if (timeLeft < 0 || currentQuestionIndex > 4) {
+        score = score - 25;
+        if (timeLeft < 0 || currentQuestionIndex === 5) {
             clearInterval(timeInterval);
             endQuiz();
         } else {
@@ -228,6 +229,9 @@ function startQuiz() {
 function timerFunction() {
     timeLeft--;
     timer.textContent = "Time: " + timeLeft;
+    if (timeLeft === 0) {
+        endQuiz();
+    }
 }
 
 function displayMessage(message) {
@@ -238,15 +242,14 @@ function displayMessage(message) {
 
 // ---------- End of Quiz - Submit Score ---------- //
 function endQuiz() {
-
+    questionh1.textContent = "All done! ";
     // Clear timer
-    clearInterval()
+    clearInterval(timeInterval)
     timer.textContent = "Out of time!";
     timer.setAttribute("style", "color:red")
 
     // Update text on screen
     const endText = document.createElement('p');
-    questionh1.textContent = "All done! ";
     paragraph.textContent = "Your final score is " + score;
     endText.textContent = "Input your initials to save your score:"
     paragraph.append(endText);
@@ -277,14 +280,11 @@ function endQuiz() {
 
             // Function that pushes intials to an array
             highScore.push({ initials, score });
-            console.log(highScore)
 
             stringifyArray();
-            questionh1.reset();
-            paragraph.reset();
-            startButton.reset();
         }
     })
 }
 
-printHighScores();
+
+

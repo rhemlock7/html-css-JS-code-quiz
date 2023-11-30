@@ -108,3 +108,14 @@ form {
     padding-left: 10px;
     padding-right: 50px;
 }
+
+#high-score-list {
+    width: 400px;
+    margin: auto;
+    text-align: left;
+}
+
+#high-score-list li {
+    margin: 7px 0;
+    font-size: 25px;
+}
