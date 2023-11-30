@@ -50,7 +50,7 @@ a:hover {
 
 button {
     padding: 10px 45px;
-    margin-top: 40px;
+    margin-top: 25px;
     border-radius: 8px;
     border: none;
     background-color: rgb(68, 0, 128);
@@ -91,4 +91,31 @@ form {
     padding: 8px 0;
     margin-top: 15px;
     border-top: 1px solid black;
+}
+
+.multiple-choice-container {
+    display: flex;
+    flex-direction: column;
+    width: 275px;
+}
+
+.answer-status {
+    margin-top: 20px;
+}
+
+#score-input {
+    padding: 5px 0;
+    padding-left: 10px;
+    padding-right: 50px;
+}
+
+#high-score-list {
+    width: 400px;
+    margin: auto;
+    text-align: left;
+}
+
+#high-score-list li {
+    margin: 7px 0;
+    font-size: 25px;
 }

@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 // ---------- Variables ---------- //
+=======
+// Variables
+>>>>>>> origin
 const root = $('#root');
 let timer = document.getElementById("timer");
 let timeLeft = 40; // Time allotted for timer = seconds
 let timeInterval;
 let leaderBoard = document.getElementById('high-score-list');
 
+<<<<<<< HEAD
 // ---------- HTML Elements ---------- //
 let questionh1 = document.getElementById("h1");
 let startButton = document.getElementById("bttn");
@@ -38,11 +43,17 @@ function printHighScores() {
     }
 }
 
+=======
+>>>>>>> origin
 // Array containing the Questions & Options
 const questions = [
     {
         question: "Commonly used data types do NOT include:",
+<<<<<<< HEAD
         answers: [
+=======
+        options: [
+>>>>>>> origin
             {
                 option: "Strings",
                 isCorrect: false
@@ -62,7 +73,11 @@ const questions = [
     },
     {
         question: "The condition of an if/else statement is enclosed with ______.",
+<<<<<<< HEAD
         answers: [
+=======
+        options: [
+>>>>>>> origin
             {
                 option: "Parenthesis",
                 isCorrect: true
@@ -82,7 +97,11 @@ const questions = [
     },
     {
         question: "Arrays in JavaScript can be used to store ________.",
+<<<<<<< HEAD
         answers: [
+=======
+        options: [
+>>>>>>> origin
             {
                 option: "Numbers & Strings",
                 isCorrect: false
@@ -102,7 +121,11 @@ const questions = [
     },
     {
         question: "String values must be enclosed within ______ when being assigned to variables.",
+<<<<<<< HEAD
         answers: [
+=======
+        options: [
+>>>>>>> origin
             {
                 option: "Commas",
                 isCorrect: false
@@ -122,7 +145,11 @@ const questions = [
     },
     {
         question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+<<<<<<< HEAD
         answers: [
+=======
+        options: [
+>>>>>>> origin
             {
                 option: "JavaScript",
                 isCorrect: false
@@ -142,6 +169,7 @@ const questions = [
     }
 ]
 
+<<<<<<< HEAD
 // ---------- Create question ---------- //
 function displayQuestion(questionArray) {
     questionh1.textContent = questionArray.question;
@@ -166,12 +194,25 @@ function displayQuestion(questionArray) {
         // Event listener to handle click
         choiceButton.addEventListener('click', selectAnswer);
     });
+=======
+// HTML Elements
+let questionh1 = document.getElementById("h1");
+let startButton = document.getElementById("bttn");
+
+
+// Create multiple choice options
+function createMultipleChoice() {
+    const optionDiv = document.createElement('div');
+
+    const choiceButton = document.createElement('button');
+>>>>>>> origin
 }
 
 // ---------- Determines if answer is correct ---------- //
 function selectAnswer(event) {
     const selectButton = event.target;
 
+<<<<<<< HEAD
     // Create div containing the answer status
     const answerDiv = document.createElement('div');
     answerDiv.className = "answer-status";
@@ -201,10 +242,38 @@ function selectAnswer(event) {
 }
 
 // ---------- Timer countdown function ---------- //
+=======
+// Create question
+function displayQuestion(index){
+    questionh1.textContent = questions[index].question;
+}
+
+
+
+
+
+// function createQuestion(questionArray) {
+//     const questionContainer = document.createElement('div');
+//     questionContainer.className = 'question-container';
+
+//     // Update the h1 with the object's question
+//     questionh1.textContent = questionArray.question;
+//     // Append h1 to the questionContainer div
+//     questionContainer.appendChild(questionh1);
+
+//     const form = document.createElement('form');
+//     questionArray.options.forEach(({ options }) => form.appendChild(createMultipleChoice()));
+//     container.appendChild(form);
+// }
+
+
+// Timer countdown function
+>>>>>>> origin
 function startQuiz() {
     // Remove start button and style text-align:left;
     startButton.setAttribute("style", "display:none;");
     document.body.setAttribute("style", "text-align:left;")
+<<<<<<< HEAD
 
     timeInterval = setInterval(timerFunction, 1000)
 
@@ -277,3 +346,24 @@ let storedHighSchores = JSON.parse(localStorage.getItem("highScores"))
 console.log(storedHighSchores)
 
 printHighScores();
+=======
+    
+    // Timer countdown. Stop quiz if timer hits 0
+    // let timeInterval = setInterval(function() {
+    //     timeLeft--;
+    //     timer.textContent = "Time: " + timeLeft;
+
+    //     if(timeLeft === -1) {
+    //         clearInterval(timeInterval);
+    //         timer.textContent = "Out of time!";
+    //         timer.setAttribute("style", "color:red")
+    //         question.textContent = "Quiz Ended 😔";
+    //         answerText.textContent = "";
+    //         form.textContent = "";
+    //     }
+
+    // }, 1000)
+}
+
+startQuiz();
+>>>>>>> origin

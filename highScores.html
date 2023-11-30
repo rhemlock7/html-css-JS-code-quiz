@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Coding Quiz</title>
+    <title>High Scores</title>
 </head>
 <body>
     <!-- Header with timer and score link -->
     <header>
-        <a href="/highScores.html">View high scores</a>
-        <p id="timer">Timer: 0</p>
+        <a href="/">Back To Quiz</a>
+        <p id="timer"></p>
     </header>
 
     <!-- Primary content div -->
     <main id="root">
-        <h1 id="h1">Coding Quiz Challenge</h1>
-        <p id="p">Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        <button id="bttn" onclick="startQuiz()">Start Quiz</button>
+        <h1 id="h1">High Scores</h1>
+        <ol id="high-score-list">
+            <!-- <li id="score-li">Play to score</li> -->
+        </ol>
     </main>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/JavaScript/script.js"></script>
