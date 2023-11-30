@@ -3,7 +3,7 @@ const root = $('#root');
 let timer = document.getElementById("timer");
 let timeLeft = 40; // Time allotted for timer = seconds
 let timeInterval;
-const leaderBoard = document.getElementById('high-score-list');
+let leaderBoard = document.getElementById('high-score-list');
 
 // ---------- HTML Elements ---------- //
 let questionh1 = document.getElementById("h1");
@@ -24,18 +24,18 @@ function stringifyArray() {
 
 function printHighScores() {
     // Get local storage data
-    let lastHighScore = JSON.parse(localStorage.getItem('highScores'));
-    highScore = lastHighScore;
-    highScore.sort(lastHighScore.score)
-    highScore.reverse(lastHighScore.score)
-    const scoreLi = document.createElement('li');
+    let storedHighScores = JSON.parse(localStorage.getItem("highScores"));
 
-    lastHighScore.forEach(display => {
-        
-        scoreLi.textContent = display.initials + ": " + display.score;
-        leaderBoard.append(scoreLi);
-        
-    })
+    if (storedHighScores != null) {
+        highScore = storedHighScores;
+    }
+
+    for (i=0; i < highScore.length; i++) {
+        let li = document.createElement('li');
+        li.textContent = highScore[i].initials + ": " + highScore[i].score
+
+        leaderBoard.append(li);
+    }
 }
 
 // Array containing the Questions & Options
@@ -183,20 +183,20 @@ function selectAnswer(event) {
     // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
         answerText.textContent = "✅ Correct"
-            setTimeout(function () {
-                currentQuestionIndex++;
-                score = score + 50;
-                answerText.textContent = "";
-                displayQuestion(questions[currentQuestionIndex])
-            }, 500)
+        setTimeout(function () {
+            currentQuestionIndex++;
+            score = score + 50;
+            answerText.textContent = "";
+            displayQuestion(questions[currentQuestionIndex])
+        }, 500)
     } else {
         answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
-            setTimeout(function () {
-                currentQuestionIndex++;
-                score = timeLeft + 10;
-                answerText.textContent = "";
-                displayQuestion(questions[currentQuestionIndex])
-            }, 500)
+        setTimeout(function () {
+            currentQuestionIndex++;
+            score = timeLeft + 10;
+            answerText.textContent = "";
+            displayQuestion(questions[currentQuestionIndex])
+        }, 500)
     }
 }
 
@@ -266,9 +266,14 @@ function endQuiz() {
             localStorage.setItem("Score", score)
 
             // Function that pushes intials to an array
-            // highScore.push({ initials, score });
+            highScore.push({ initials, score });
 
             stringifyArray();
         }
     })
 }
+
+let storedHighSchores = JSON.parse(localStorage.getItem("highScores"))
+console.log(storedHighSchores)
+
+printHighScores();
