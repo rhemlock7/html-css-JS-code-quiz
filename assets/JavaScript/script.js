@@ -1,7 +1,7 @@
 // ---------- Variables ---------- //
 const root = $('#root');
 let timer = document.getElementById("timer");
-let timeLeft = 90; // Time allotted for timer = seconds
+let timeLeft = 20; // Time allotted for timer = seconds
 
 // Array containing the Questions & Options
 const questions = [
@@ -126,7 +126,6 @@ function displayQuestion(questionArray){
     
     // Add the multiple choice answers
     questionArray.answers.forEach(answer => {
-        console.log(answer.option);
         // create multiple choice container div
         // create the buttons to be within the div
         const choiceButton = document.createElement('button');
@@ -159,25 +158,36 @@ function selectAnswer(event) {
 
     // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
-        console.log("true")
         answerText.textContent = "✅ Correct"
-        setTimeout(function(){
-            answerText.textContent = "";
-            currentQuestionIndex++;
-            displayQuestion(questions[currentQuestionIndex])
-        }, 500)
 
-        // increase "currentQuestionIndex" to go to next question
+        if(timeLeft <= 0 || currentQuestionIndex >= questions.length) {
+            endQuiz();
+        } else {
+            setTimeout(function(){
+                answerText.textContent = "";
+                currentQuestionIndex++;
+                score = timeLeft + 20;
+                displayQuestion(questions[currentQuestionIndex])
+            }, 500)
+            
+        }
+        
     } else {
-        console.log("false")
         answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
-        setTimeout(function(){
-            answerText.textContent = "";
-            currentQuestionIndex++;
-            displayQuestion(questions[currentQuestionIndex])
-        }, 500)
+        timeLeft = timeLeft - 10;
+        score = timeLeft - 10;
 
-        // increase "currentQuestionIndex" to go to next question
+        if(timeLeft <= 0 || currentQuestionIndex >= questions.length) {
+            endQuiz();
+        } else {
+            setTimeout(function(){
+                answerText.textContent = "";
+                currentQuestionIndex++;
+                score = timeLeft + 10;
+                displayQuestion(questions[currentQuestionIndex])
+            }, 500)
+            
+        }
     }
 }
 
@@ -192,23 +202,25 @@ function startQuiz() {
     displayQuestion(questions[currentQuestionIndex]);
     
     // Timer countdown. Stop quiz if timer hits 0
-    // let timeInterval = setInterval(function() {
-    //     timeLeft--;
-    //     timer.textContent = "Time: " + timeLeft;
+    let timeInterval = setInterval(function() {
+        timeLeft--;
+        timer.textContent = "Time: " + timeLeft;
 
-    //     if(timeLeft === -1) {
-    //         clearInterval(timeInterval);
-    //         timer.textContent = "Out of time!";
-    //         timer.setAttribute("style", "color:red")
-    //         question.textContent = "Quiz Ended 😔";
-    //         answerText.textContent = "";
-    //         form.textContent = "";
-    //     }
-
-    // }, 1000)
+    }, 1000)
 }
 
 // ---------- End of Quiz - Submit Score ---------- //
+function endQuiz() {
+    // Update text on screen
+    questionh1.textContent = "All done! ";
+    paragraph.textContent = "Your final score is " + score;
+    answerText.textContent = "";
 
+    clearInterval(timeInterval);
+    timer.textContent = "Out of time!";
+    timer.setAttribute("style", "color:red")
 
-// ---------- Show High Scores ---------- //
+    // Take an input and save it in local storage
+}
+
+// ---------- Save High Scores ---------- //
