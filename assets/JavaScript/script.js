@@ -148,21 +148,25 @@ function displayQuestion(questionArray){
 // ---------- Determines if answer is correct ---------- //
 function selectAnswer(event) {
     const selectButton = event.target;
+
+    // Create div containing the answer status
     const answerDiv = document.createElement('div');
     answerDiv.className = "answer-status";
     const answerText = document.createElement('p');
     answerDiv.append(answerText)
+    // Append the status div to the root
     root.append(answerDiv);
-    // console.log(selectButton)
+
+    // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
         console.log("true")
         answerText.textContent = "✅ Correct"
-        // say "✅ Correct"
+
         // increase "currentQuestionIndex" to go to next question
     } else {
         console.log("false")
         answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
-        // say "❌ Wrong answer... deducting 10 seconds."
+
         // increase "currentQuestionIndex" to go to next question
     }
 }
