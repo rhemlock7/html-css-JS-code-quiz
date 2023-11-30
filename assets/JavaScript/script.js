@@ -182,34 +182,21 @@ function selectAnswer(event) {
 
     // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
-        if (timeLeft < 0 || currentQuestionIndex === 5) {
-            clearInterval(timeInterval);
-            endQuiz();
-        } else {
-            answerText.textContent = "✅ Correct"
+        answerText.textContent = "✅ Correct"
             setTimeout(function () {
                 currentQuestionIndex++;
                 score = score + 50;
                 answerText.textContent = "";
                 displayQuestion(questions[currentQuestionIndex])
             }, 500)
-
-        }
     } else {
-        timeLeft = timeLeft - 10;
-        score = score - 25;
-        if (timeLeft < 0 || currentQuestionIndex === 5) {
-            clearInterval(timeInterval);
-            endQuiz();
-        } else {
-            answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
+        answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
             setTimeout(function () {
                 currentQuestionIndex++;
                 score = timeLeft + 10;
                 answerText.textContent = "";
                 displayQuestion(questions[currentQuestionIndex])
             }, 500)
-        }
     }
 }
 
@@ -229,7 +216,7 @@ function startQuiz() {
 function timerFunction() {
     timeLeft--;
     timer.textContent = "Time: " + timeLeft;
-    if (timeLeft === 0) {
+    if (timeLeft === 0 || currentQuestionIndex === 5) {
         endQuiz();
     }
 }
@@ -279,12 +266,9 @@ function endQuiz() {
             localStorage.setItem("Score", score)
 
             // Function that pushes intials to an array
-            highScore.push({ initials, score });
+            // highScore.push({ initials, score });
 
             stringifyArray();
         }
     })
 }
-
-
-
