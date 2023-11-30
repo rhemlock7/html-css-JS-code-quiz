@@ -60,10 +60,10 @@ function addMultipleChoice(bttnValue) {
     paragraph.replaceWith(form);
 
     // Check correct answer
-    radio.addEventListener("click", function(){
+    radio.addEventListener("click", function(indexNumber){
         let buttonValue = bttnValue;
         // console.log(buttonValue)
-        if (buttonValue == questionArray[0].correctAnswer) {
+        if (buttonValue == questionArray[indexNumber].correctAnswer) {
             console.log("CORRECT")
             form.appendChild(answerDiv);
             answerText.textContent = "✅ Correct!"
