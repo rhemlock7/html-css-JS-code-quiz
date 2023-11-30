@@ -11,7 +11,7 @@ let questionArray = [
     },
     {
         question: "The condition of an if/else statement is enclosed with ______.",
-        options: ["Quotes", "Curly Brackets", "Parenthesis", "Square Brackets"],
+        options: ["Parenthesis", "Curly Brackets", "Quotes", "Square Brackets"],
         correctAnswer: "Parenthesis"
     },
     {
@@ -21,7 +21,7 @@ let questionArray = [
     },
     {
         question: "String values must be enclosed within ______ when being assigned to variables.",
-        options: ["Commas", "Curly Brackets", "Quotes", "Parenthesis"],
+        options: ["Commas", "Quotes", "Curly Brackets", "Parenthesis"],
         correctAnswer: "Quotes"
     },
     {
@@ -43,6 +43,7 @@ let paragraph = document.getElementById("p");
 let form = document.createElement("form");
 let questionCount;
 questionCount = 0;
+let buttonValue;
 
 // Add dynamic multiple choice questions
 function addMultipleChoice(bttnValue) {
@@ -60,23 +61,6 @@ function addMultipleChoice(bttnValue) {
     paragraph.replaceWith(form);
 
     // Check correct answer
-    radio.addEventListener("click", function(){
-        let buttonValue = bttnValue;
-        // console.log(buttonValue)
-        if (buttonValue == questionArray[questionCount].correctAnswer) {
-            console.log(questionCount)
-            form.appendChild(answerDiv);
-            answerText.textContent = "✅ Correct!"
-            questionCount++;
-            displayQuestion(questionCount)
-        } else {
-            form.appendChild(answerDiv);
-            answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
-            timeLeft = timeLeft - 10;
-            questionCount++;
-            displayQuestion(questionCount)
-        }
-    })
 }
 
 
@@ -100,6 +84,9 @@ function displayQuestion(indexNumber) {
     answerDiv.id = 'answer-div'
     answerDiv.appendChild(answerText);
 
+    form.on('click', function(){
+        console.log("click")
+    })
 } 
 
 
@@ -113,20 +100,46 @@ function startQuiz(indexNumber) {
     displayQuestion(indexNumber);
     
     // Timer countdown. Stop quiz if timer hits 0
-    let timeInterval = setInterval(function() {
-        timeLeft--;
-        timer.textContent = "Time: " + timeLeft;
+    // let timeInterval = setInterval(function() {
+    //     timeLeft--;
+    //     timer.textContent = "Time: " + timeLeft;
 
-        if(timeLeft === -1) {
-            clearInterval(timeInterval);
-            timer.textContent = "Out of time!";
-            timer.setAttribute("style", "color:red")
-            question.textContent = "Quiz Ended 😔";
-            answerText.textContent = "";
-            form.textContent = "";
-        }
+    //     if(timeLeft === -1) {
+    //         clearInterval(timeInterval);
+    //         timer.textContent = "Out of time!";
+    //         timer.setAttribute("style", "color:red")
+    //         question.textContent = "Quiz Ended 😔";
+    //         answerText.textContent = "";
+    //         form.textContent = "";
+    //     }
 
-    }, 1000)
+    // }, 1000)
 }
 
 startQuiz(questionCount);
+
+
+// form.on("click", ".button-choice", function(){
+//     buttonValue = bttnValue;
+//     console.log("clicked")
+    // if (buttonValue === questionArray[questionCount].correctAnswer ) {
+    //     console.log(questionCount)
+    //     form.appendChild(answerDiv);
+    //     answerText.textContent = "✅ Correct!"
+    //     setTimeout(() => {
+    //         answerText.textContent = ""
+    //         questionCount++;
+    //         buttonValue = "NEW ITEM!";
+    //         displayQuestion(questionCount)
+    //     }, 2000);
+        
+    // } else {
+    //     form.appendChild(answerDiv);
+    //     answerText.textContent = "❌ Wrong answer... Deducting 10 seconds."
+    //     timeLeft = timeLeft - 10;
+    //     setTimeout(() => {
+    //         answerText.textContent = ""
+    //         questionCount++;
+    //         displayQuestion(questionCount)
+    //     }, 2000);
+    // }
