@@ -102,3 +102,9 @@ form {
 .answer-status {
     margin-top: 20px;
 }
+
+#score-input {
+    padding: 5px 0;
+    padding-left: 10px;
+    padding-right: 50px;
+}

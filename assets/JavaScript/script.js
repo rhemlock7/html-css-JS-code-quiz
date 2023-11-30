@@ -2,6 +2,29 @@
 const root = $('#root');
 let timer = document.getElementById("timer");
 let timeLeft = 20; // Time allotted for timer = seconds
+let timeInterval;
+
+// ---------- High Score ---------- //
+const highScore = JSON.parse(localStorage.getItem('highScores'));
+
+function stringifyArray() {
+    localStorage.setItem('highScores', JSON.stringify(highScore))
+
+    console.log("registered to local storage")
+}
+
+function printHighScores() {
+    let lastHighScore = JSON.parse(localStorage.getItem('highScores'))
+    console.log(lastHighScore)
+
+    lastHighScore.forEach(display => {
+        const scoreLi = document.createElement('li');
+        const leaderBoard = document.getElementById('high-score-list');
+        scoreLi.textContent = display.initials + ": " + display.score;
+
+        leaderBoard.append(scoreLi);
+    })
+}
 
 // Array containing the Questions & Options
 const questions = [
@@ -118,12 +141,12 @@ let score = 0;
 
 
 // ---------- Create question ---------- //
-function displayQuestion(questionArray){
+function displayQuestion(questionArray) {
     questionh1.textContent = questionArray.question;
     paragraph.textContent = "";
     const multipleChoiceContainer = document.createElement('div');
     multipleChoiceContainer.className = "multiple-choice-container"
-    
+
     // Add the multiple choice answers
     questionArray.answers.forEach(answer => {
         // create multiple choice container div
@@ -158,35 +181,33 @@ function selectAnswer(event) {
 
     // Determine if the button selected is correct or not
     if (selectButton.dataset.answer === "true") {
-        answerText.textContent = "✅ Correct"
-
-        if(timeLeft <= 0 || currentQuestionIndex >= questions.length) {
+        if (timeLeft < 0 || currentQuestionIndex > 4) {
+            clearInterval(timeInterval);
             endQuiz();
         } else {
-            setTimeout(function(){
-                answerText.textContent = "";
+            answerText.textContent = "✅ Correct"
+            setTimeout(function () {
                 currentQuestionIndex++;
                 score = timeLeft + 20;
+                answerText.textContent = "";
                 displayQuestion(questions[currentQuestionIndex])
             }, 500)
-            
+
         }
-        
     } else {
-        answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
         timeLeft = timeLeft - 10;
         score = timeLeft - 10;
-
-        if(timeLeft <= 0 || currentQuestionIndex >= questions.length) {
+        if (timeLeft < 0 || currentQuestionIndex > 4) {
+            clearInterval(timeInterval);
             endQuiz();
         } else {
-            setTimeout(function(){
-                answerText.textContent = "";
+            answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
+            setTimeout(function () {
                 currentQuestionIndex++;
                 score = timeLeft + 10;
+                answerText.textContent = "";
                 displayQuestion(questions[currentQuestionIndex])
             }, 500)
-            
         }
     }
 }
@@ -197,30 +218,73 @@ function startQuiz() {
     startButton.setAttribute("style", "display:none;");
     document.body.setAttribute("style", "text-align:left;")
 
-    
+    timeInterval = setInterval(timerFunction, 1000)
+
+    // Set score and display the first question
     score = 0;
     displayQuestion(questions[currentQuestionIndex]);
-    
-    // Timer countdown. Stop quiz if timer hits 0
-    let timeInterval = setInterval(function() {
-        timeLeft--;
-        timer.textContent = "Time: " + timeLeft;
+}
 
-    }, 1000)
+function timerFunction() {
+    timeLeft--;
+    timer.textContent = "Time: " + timeLeft;
+}
+
+function displayMessage(message) {
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    paragraph.append(messageElement);
 }
 
 // ---------- End of Quiz - Submit Score ---------- //
 function endQuiz() {
-    // Update text on screen
-    questionh1.textContent = "All done! ";
-    paragraph.textContent = "Your final score is " + score;
-    answerText.textContent = "";
 
-    clearInterval(timeInterval);
+    // Clear timer
+    clearInterval()
     timer.textContent = "Out of time!";
     timer.setAttribute("style", "color:red")
 
-    // Take an input and save it in local storage
+    // Update text on screen
+    const endText = document.createElement('p');
+    questionh1.textContent = "All done! ";
+    paragraph.textContent = "Your final score is " + score;
+    endText.textContent = "Input your initials to save your score:"
+    paragraph.append(endText);
+
+    // Create an input
+    const input = document.createElement('input')
+    const submitButton = document.createElement('button')
+    input.setAttribute("type", "text");
+    input.setAttribute("placeholder", "Input your initials");
+    input.id = "score-input"
+    submitButton.textContent = "Submit Your Score";
+
+    root.append(input);
+    root.append(submitButton);
+
+
+    // Accept the input
+    submitButton.addEventListener("click", function () {
+        let initials = input.value.trim();
+        if (initials === "") {
+            displayMessage("Email cannot be blank");
+        } else {
+            displayMessage("Registered successfully");
+
+            // Store the input
+            localStorage.setItem("Player", initials);
+            localStorage.setItem("Score", score)
+
+            // Function that pushes intials to an array
+            highScore.push({ initials, score });
+            console.log(highScore)
+
+            stringifyArray();
+            questionh1.reset();
+            paragraph.reset();
+            startButton.reset();
+        }
+    })
 }
 
-// ---------- Save High Scores ---------- //
+printHighScores();
