@@ -122,6 +122,7 @@ function displayQuestion(questionArray){
     questionh1.textContent = questionArray.question;
 
     const multipleChoiceContainer = document.createElement('div');
+    multipleChoiceContainer.className = "multiple-choice-container"
     
     // Add the multiple choice answers
     questionArray.answers.forEach(answer => {
@@ -147,21 +148,20 @@ function displayQuestion(questionArray){
 // ---------- Determines if answer is correct ---------- //
 function selectAnswer(event) {
     const selectButton = event.target;
+    const answerDiv = document.createElement('div');
+    answerDiv.className = "answer-status";
+    const answerText = document.createElement('p');
+    answerDiv.append(answerText)
+    root.append(answerDiv);
     // console.log(selectButton)
     if (selectButton.dataset.answer === "true") {
         console.log("true")
-        const answerDisplay = document.createElement('div')
-        const answerText = document.createElement('p');
-        // setTimeout(
-        //     answerText.textContent = "✅ Correct!"
-        //     answerDisplay.append(answerText)
-        //     paragraph.append(answerDisplay)
-        // ,1000)
+        answerText.textContent = "✅ Correct"
         // say "✅ Correct"
-        
         // increase "currentQuestionIndex" to go to next question
     } else {
         console.log("false")
+        answerText.textContent = "❌ Wrong answer... deducting 10 seconds."
         // say "❌ Wrong answer... deducting 10 seconds."
         // increase "currentQuestionIndex" to go to next question
     }

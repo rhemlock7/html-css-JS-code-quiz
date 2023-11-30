@@ -50,7 +50,7 @@ a:hover {
 
 button {
     padding: 10px 45px;
-    margin-top: 40px;
+    margin-top: 25px;
     border-radius: 8px;
     border: none;
     background-color: rgb(68, 0, 128);
@@ -91,4 +91,14 @@ form {
     padding: 8px 0;
     margin-top: 15px;
     border-top: 1px solid black;
+}
+
+.multiple-choice-container {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+}
+
+.answer-status {
+    margin-top: 20px;
 }
